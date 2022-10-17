@@ -11,9 +11,10 @@ import {
   Header,
   HeaderContent,
   TotalCars,
+  CarList
 } from './styles';
 
-const Home: React.FC = () => {
+export const Home: React.FC = () => {
   const carDataOne = {
     brand: 'AUDI',
     name: 'RS 5 Coupe',
@@ -54,10 +55,11 @@ const Home: React.FC = () => {
         </HeaderContent>
       </Header>
 
-      <Car data={carDataOne} />
-      <Car data={carDataTwo} />
+      <CarList
+        data={[1,2,3, 4, 5, 6, 7]}
+        keyExtractor={item => String(item)}
+        renderItem={({ item }) => <Car data={carDataOne} />}
+      />
     </Container>
   );
 }
-
-export default Home;
