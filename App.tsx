@@ -16,6 +16,7 @@ import {
 import { Home } from './src/screens/Home';
 import { CarDetails } from './src/screens/CarDetails';
 import theme from './src/styles/theme';
+import { StatusBar } from 'react-native';
 
 
 export default function App() {
