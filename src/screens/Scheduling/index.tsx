@@ -3,12 +3,13 @@ import React from 'react';
 import { useTheme } from 'styled-components';
 
 import { BackButton } from '../../components/BackButton';
+import { Button } from '../../components/Button';
+import { Calendar } from '../../components/Calendar'
 
 import ArrowSvg from '../../assets/arrow.svg'
 
 import * as S from './styles';
 import { StatusBar } from 'react-native';
-import { Button } from '../../components/Button';
 
 export const Scheduling = () => {
   const theme = useTheme();
@@ -51,8 +52,8 @@ export const Scheduling = () => {
       </S.Header>
 
       <S.Content>
-
-      </S.Content>
+        <Calendar />
+      </S.Content> 
 
       <S.Footer>
         <Button title="Confirmar" />
