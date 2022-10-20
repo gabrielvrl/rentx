@@ -6,7 +6,7 @@ import { useTheme } from 'styled-components';
 import { Container } from './styles';
 
 interface Props extends BorderlessButtonProps {
-  color: string;
+  color?: string;
 }
 
 export const BackButton = ({ color, ...rest }: Props) => {
