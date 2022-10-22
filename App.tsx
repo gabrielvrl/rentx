@@ -1,5 +1,7 @@
 import React from 'react';
 import AppLoading from 'expo-app-loading';
+
+import theme from './src/styles/theme';
 import { ThemeProvider } from 'styled-components';
 
 import {
@@ -13,12 +15,7 @@ import {
   Archivo_600SemiBold
 } from '@expo-google-fonts/archivo';
 
-import { Home } from './src/screens/Home';
-import { CarDetails } from './src/screens/CarDetails';
-import { Scheduling } from './src/screens/Scheduling';
-import { SchedulingDetails } from './src/screens/SchedulingDetails';
-import theme from './src/styles/theme';
-import { StatusBar } from 'react-native';
+import { SchedulingComplete } from './src/screens/SchedulingComplete';
 
 
 export default function App() {
@@ -36,7 +33,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SchedulingDetails />
+      <SchedulingComplete />
     </ThemeProvider>
   );
 }
