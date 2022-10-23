@@ -1,6 +1,8 @@
 import React from 'react';
 
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons'
+import { useTheme } from 'styled-components';
 
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
@@ -16,12 +18,15 @@ import PeopleSVG from '../../assets/people.svg';
 
 import { RFValue } from 'react-native-responsive-fontsize';
 
-import { useTheme } from 'styled-components'
-
 import * as S from './styles';
 
 export const SchedulingDetails: React.FC = () => {
   const theme = useTheme();
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+
+  const handleConfirmRental = () => {
+    navigation.navigate('SchedulingComplete')
+  }
 
   return (
     <S.Container>
@@ -94,7 +99,11 @@ export const SchedulingDetails: React.FC = () => {
       </S.Content>
 
       <S.Footer>
-        <Button title="Confirmar" />
+        <Button 
+          title="Alugar agora" 
+          color={theme.colors.success} 
+          onPress={handleConfirmRental} 
+        />
       </S.Footer>
 
     </S.Container>
