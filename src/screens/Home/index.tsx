@@ -25,8 +25,8 @@ export const Home: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
-  const handleCarDetails = () => {
-    navigation.navigate('CarDetails')
+  const handleCarDetails = (car: CarDTO) => {
+    navigation.navigate('CarDetails', { car })
   }
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const Home: React.FC = () => {
       } catch(error) {
         console.log(error)
       } finally {
-        setLoading(true)
+        setLoading(false)
       }
     };
 
@@ -70,7 +70,7 @@ export const Home: React.FC = () => {
             data={cars}
             keyExtractor={item => item.id}
             renderItem={({ item }) => 
-              <Car data={item} onPress={handleCarDetails} />
+              <Car data={item} onPress={() => handleCarDetails(item)} />
             }
           />
       }
