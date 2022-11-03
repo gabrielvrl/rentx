@@ -2,17 +2,12 @@ import React from 'react';
 
 import { NavigationProp, ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
 
+import { getAccessoryIcon } from '../../utils/getAccessoryIcon'; 
+
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
 import { Accessory } from '../../components/Accessory';
 import { Button } from '../../components/Button';
-
-import SpeedSVG from '../../assets/speed.svg';
-import AccelerationSVG from '../../assets/acceleration.svg';
-import ForceSVG from '../../assets/force.svg';
-import GasolineSVG from '../../assets/gasoline.svg';
-import ExchangeSVG from '../../assets/exchange.svg';
-import PeopleSVG from '../../assets/people.svg';
 
 import { 
   Container,
@@ -80,15 +75,10 @@ export const CarDetails: React.FC = () => {
               <Accessory 
                 key={accessory.type}
                 name={accessory.name}
-                icon={SpeedSVG}
+                icon={getAccessoryIcon(accessory.type)}
               />
             ))
           }
-          {/* <Accessory name="3.2s" icon={AccelerationSVG} />
-          <Accessory name="800 HP" icon={ForceSVG} />
-          <Accessory name="Gasolina" icon={GasolineSVG} />
-          <Accessory name="Auto" icon={ExchangeSVG} />
-          <Accessory name="2 pessoas" icon={PeopleSVG} /> */}
         </Accessories>
 
         <About>{car.about}</About>
