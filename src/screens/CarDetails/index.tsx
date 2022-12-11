@@ -27,17 +27,17 @@ import {
 } from './styles';
 import { CarDTO } from '../../dtos/CarDTO';
 
-interface RouteParams {
+export interface RouteParams {
   car: CarDTO
 }
 
 export const CarDetails: React.FC = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const route = useRoute();
-  const { car } = route.params as RouteParams
+  const { car } = route.params as RouteParams;
 
   const handleConfirmRental = () => {
-    navigation.navigate('Scheduling')
+    navigation.navigate('Scheduling', { car })
   }
 
   const handleBack = () => {

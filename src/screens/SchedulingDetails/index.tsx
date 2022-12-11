@@ -28,10 +28,14 @@ export const SchedulingDetails: React.FC = () => {
     navigation.navigate('SchedulingComplete')
   }
 
+  const handleBack = () => {
+    navigation.goBack()
+  }
+
   return (
     <S.Container>
       <S.Header>
-        <BackButton onPress={() => { console.log('pressed'); } } color={''} />
+        <BackButton onPress={handleBack} color={''} />
       </S.Header>
 
       <S.CarImages>
