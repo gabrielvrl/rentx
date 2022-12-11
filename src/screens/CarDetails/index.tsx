@@ -29,6 +29,7 @@ import { CarDTO } from '../../dtos/CarDTO';
 
 export interface RouteParams {
   car: CarDTO
+  dates: string[];
 }
 
 export const CarDetails: React.FC = () => {
