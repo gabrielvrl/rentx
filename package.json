@@ -42,6 +42,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@types/react-native-calendars": "^1.1264.3",
+    "@types/styled-components": "^5.1.26",
     "react-native-svg-transformer": "^1.0.0"
   },
   "private": true
