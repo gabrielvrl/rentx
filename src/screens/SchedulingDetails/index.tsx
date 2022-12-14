@@ -147,7 +147,7 @@ export const SchedulingDetails: React.FC = () => {
         <Button 
           title="Alugar agora" 
           color={theme.colors.success} 
-          onPress={handleConfirmRental} 
+          onPress={handleConfirmRental}
         />
       </S.Footer>
 
