@@ -1,5 +1,5 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { ViewToken } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import { 
@@ -14,7 +14,19 @@ interface ImageSliderProps {
   imagesUrl: string[];
 }
 
+interface ChangeImageProps {
+  viewableItems: ViewToken[];
+  changed: ViewToken[];
+}
+
 export const ImageSlider = ({ imagesUrl }: ImageSliderProps) => {
+  const [imageIndex, setImageIndex] = useState(0);
+
+  const indexChanged = useRef((info: ChangeImageProps) => {
+    const index = info.viewableItems[0].index!
+    setImageIndex(index);
+  });
+
   return (
     <Container>
       <ImageIndexes>
@@ -22,7 +34,7 @@ export const ImageSlider = ({ imagesUrl }: ImageSliderProps) => {
           imagesUrl.map((_, index) => (
             <ImageIndex 
               key={String(index)}
-              active={true} 
+              active={index === imageIndex} 
             />
           ))
         }
@@ -41,6 +53,7 @@ export const ImageSlider = ({ imagesUrl }: ImageSliderProps) => {
           )}
           horizontal
           showsHorizontalScrollIndicator={false}
+          onViewableItemsChanged={indexChanged.current}
         />
     </Container>
   );
