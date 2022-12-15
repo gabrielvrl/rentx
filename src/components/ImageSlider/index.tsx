@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 
 import { 
   Container,
@@ -17,18 +18,30 @@ export const ImageSlider = ({ imagesUrl }: ImageSliderProps) => {
   return (
     <Container>
       <ImageIndexes>
-        <ImageIndex active={true} />
-        <ImageIndex active={false} />
-        <ImageIndex active={false} />
-        <ImageIndex active={false} />
+        {
+          imagesUrl.map((_, index) => (
+            <ImageIndex 
+              key={String(index)}
+              active={true} 
+            />
+          ))
+        }
       </ImageIndexes>
 
-      <CarImageWrapper>
-        <CarImage 
-          source={{ uri: imagesUrl[0] }}
-          resizeMode="contain"
+        <FlatList 
+          data={imagesUrl}
+          keyExtractor={key => key}
+          renderItem={({ item }) => (
+            <CarImageWrapper>
+              <CarImage 
+                source={{ uri: item }}
+                resizeMode="contain"
+              />
+            </CarImageWrapper>
+          )}
+          horizontal
+          showsHorizontalScrollIndicator={false}
         />
-      </CarImageWrapper>
     </Container>
   );
 }

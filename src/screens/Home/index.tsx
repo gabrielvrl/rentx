@@ -60,7 +60,7 @@ export const Home: React.FC = () => {
           />
 
           <S.TotalCars>
-            Total de 12 carros
+            Total de {cars.length} carros
           </S.TotalCars>
         </S.HeaderContent>
       </S.Header>
