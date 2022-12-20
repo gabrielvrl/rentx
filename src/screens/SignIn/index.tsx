@@ -28,7 +28,13 @@ export function SignIn() {
       </S.Header>
 
       <S.Form>
-      <Input iconName="mail" />
+        <Input 
+          iconName="mail"
+          placeholder="E-mail"
+          keyboardType="email-address"
+          autoCorrect={false}
+          autoCapitalize="none"
+        />
       </S.Form>
 
       <S.Footer>
