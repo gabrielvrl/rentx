@@ -3,6 +3,7 @@ import { StatusBar } from 'react-native';
 import { useTheme } from 'styled-components';
 
 import { Button } from '../../components/Button';
+import { Input } from '../../components/Input';
 
 import * as S from './styles';
 
@@ -25,6 +26,10 @@ export function SignIn() {
           uma experiência incrível.
         </S.SubTitle>
       </S.Header>
+
+      <S.Form>
+      <Input iconName="mail" />
+      </S.Form>
 
       <S.Footer>
         <Button 

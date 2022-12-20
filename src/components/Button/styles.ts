@@ -14,6 +14,7 @@ export const Container = styled(RectButton)<ContainerRectButtonProps>`
   width: 100%;
 
   padding: 19px;
+  margin-bottom: 8px;
   align-items: center;
   justify-content: center;
 
