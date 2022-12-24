@@ -8,27 +8,42 @@ import * as S from './styles';
 
 interface Props extends TextInputProps {
   iconName: React.ComponentProps<typeof Feather>['name'];
+  value?: string;
 }
 
-export const PasswordInput = ({ iconName, ...rest }: Props) => {
+export const PasswordInput = ({ iconName, value, ...rest }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
+
   const theme = useTheme();
+
+  const handleInputFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleInputBlur = () => {
+    setIsFocused(false);
+    setIsFilled(!!value);
+  };
 
   const handlePasswordVisibilityChange = () => {
     setIsPasswordVisible(prevState => !prevState);
   }
 
   return (
-    <S.Container >
+    <S.Container isFocused={isFocused}>
       <S.IconContainer>
         <Feather
           name={iconName}
           size={24}
-          color={theme.colors.text_details}
+          color={(isFocused || isFilled) ? theme.colors.main : theme.colors.text_details}
         />
       </S.IconContainer>
 
       <S.InputText
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         secureTextEntry={isPasswordVisible}
         {...rest}
       />
