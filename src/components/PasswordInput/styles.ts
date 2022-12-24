@@ -42,3 +42,5 @@ export const InputText = styled(TextInput)<Props>`
     border-bottom-color: ${theme.colors.main};
   `}
 `;
+
+export const PasswordVisibilityButton = styled.TouchableOpacity.attrs({})``
