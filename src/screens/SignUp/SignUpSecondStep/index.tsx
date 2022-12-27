@@ -1,6 +1,6 @@
-import React from 'react';
-import { KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 
 import { BackButton } from '../../../components/BackButton';
@@ -10,12 +10,36 @@ import { Button } from '../../../components/Button';
 
 import * as S from './styles';
 
+interface Params {
+  user: {
+    name: string;
+    email: string;
+    driverLicense: string;
+  }
+}
+
 export const SignUpSecondStep = () => {
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+
   const navigation = useNavigation();
+  const route = useRoute();
   const theme = useTheme();
+
+  const { user } = route.params as Params;
 
   const handleBack = () => {
     navigation.goBack();
+  }
+
+  const handleRegister = () => {
+    if(!password || !passwordConfirm){
+      return Alert.alert('Informe a senha e a confirmação dela');
+    }
+
+    if(password !== passwordConfirm){
+      return Alert.alert('As senhas não são iguais');
+    }
   }
 
   return (
@@ -43,11 +67,15 @@ export const SignUpSecondStep = () => {
             <PasswordInput 
               iconName='lock'
               placeholder='Senha'
+              onChangeText={setPassword}
+              value={password}
             />
 
             <PasswordInput 
               iconName='lock'
               placeholder='Repetir Senha'
+              onChangeText={setPasswordConfirm}
+              value={passwordConfirm}
             />
 
           </S.Form>
@@ -55,6 +83,7 @@ export const SignUpSecondStep = () => {
           <Button
             title='Cadastrar'
             color={theme.colors.success}
+            onPress={handleRegister}
           />
 
         </S.Container>
