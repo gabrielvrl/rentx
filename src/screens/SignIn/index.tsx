@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 
 import * as Yup from 'yup';
@@ -15,6 +16,7 @@ export function SignIn() {
   const [password, setPassword] = useState('');
   
   const theme = useTheme();
+  const navigation = useNavigation<NavigationProp<ParamListBase>>()
 
   const handleSignIn = async () => {
     try{
@@ -37,6 +39,10 @@ export function SignIn() {
       }
     }
   };
+
+  const handleNewAccount = () => {
+    navigation.navigate('SignUpFirstStep', {});
+  }
 
   return (
     <KeyboardAvoidingView behavior="position" enabled>
@@ -86,8 +92,8 @@ export function SignIn() {
 
             <Button 
               title="Criar conta gratuita"
-              onPress={() => {}}
-              enabled={false}
+              onPress={handleNewAccount}
+              enabled={true}
               loading={false}
               color={theme.colors.background_secondary}
               light
