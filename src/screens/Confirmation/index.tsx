@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar, useWindowDimensions } from 'react-native';
-import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import { NavigationProp, ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
 
 import { ConfirmButton } from '../../components/ConfirmButton';
 
@@ -9,12 +9,21 @@ import DoneSvg from '../../assets/done.svg';
 
 import * as S from './styles';
 
-export const SchedulingComplete: React.FC = () => {
+interface Params {
+  title: string;
+  message: string;
+  nextScreenRoute: string;
+}
+
+export const Confirmation: React.FC = () => {
   const { width } = useWindowDimensions();
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
+  const route = useRoute();
+
+  const { title, message, nextScreenRoute } = route.params as Params;
 
   const handleConfirm = () => {
-    navigation.navigate('Home')
+    navigation.navigate(nextScreenRoute)
   }
   return (
     <S.Container>
@@ -27,13 +36,12 @@ export const SchedulingComplete: React.FC = () => {
 
       <S.Content>
         <DoneSvg width={80} height={80} />
-        <S.Title>Carro alugado!</S.Title>
+        <S.Title>{title}</S.Title>
 
-        <S.Message>
-          Agora você só precisa ir{'\n'}
+        <S.Message>{message}</S.Message>
+          {/* Agora você só precisa ir{'\n'}
           até a concessionária da RENTX{'\n'}
-          pegar o seu automóvel
-        </S.Message>
+          pegar o seu automóvel */}
       </S.Content>
 
       <S.Footer>

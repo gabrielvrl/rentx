@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { NavigationProp, ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 
 import { BackButton } from '../../../components/BackButton';
@@ -22,7 +22,7 @@ export const SignUpSecondStep = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const route = useRoute();
   const theme = useTheme();
 
@@ -40,6 +40,12 @@ export const SignUpSecondStep = () => {
     if(password !== passwordConfirm){
       return Alert.alert('As senhas não são iguais');
     }
+
+    navigation.navigate('Confirmation', {
+      nextScreenRoute: 'SignIn',
+      title: 'Conta Criada!',
+      message: `Agora é só fazer login\ne aproveitar`,
+    })
   }
 
   return (
