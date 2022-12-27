@@ -41,7 +41,7 @@ export function SignIn() {
   };
 
   const handleNewAccount = () => {
-    navigation.navigate('SignUpFirstStep', {});
+    navigation.navigate('SignUpFirstStep');
   }
 
   return (
