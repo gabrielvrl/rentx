@@ -2,13 +2,9 @@ import React, { useRef, useState } from 'react';
 import { ViewToken } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
-import { 
-  Container,
-  ImageIndexes,
-  ImageIndex,
-  CarImageWrapper,
-  CarImage,
-} from './styles';
+import { Bullet } from '../Bullet'
+
+import * as S from './styles';
 
 interface ImageSliderProps {
   imagesUrl: string[];
@@ -28,33 +24,33 @@ export const ImageSlider = ({ imagesUrl }: ImageSliderProps) => {
   });
 
   return (
-    <Container>
-      <ImageIndexes>
+    <S.Container>
+      <S.ImageIndexes>
         {
           imagesUrl.map((_, index) => (
-            <ImageIndex 
+            <Bullet 
               key={String(index)}
               active={index === imageIndex} 
             />
           ))
         }
-      </ImageIndexes>
+      </S.ImageIndexes>
 
         <FlatList 
           data={imagesUrl}
           keyExtractor={key => key}
           renderItem={({ item }) => (
-            <CarImageWrapper>
-              <CarImage 
+            <S.CarImageWrapper>
+              <S.CarImage 
                 source={{ uri: item }}
                 resizeMode="contain"
               />
-            </CarImageWrapper>
+            </S.CarImageWrapper>
           )}
           horizontal
           showsHorizontalScrollIndicator={false}
           onViewableItemsChanged={indexChanged.current}
         />
-    </Container>
+    </S.Container>
   );
 }
