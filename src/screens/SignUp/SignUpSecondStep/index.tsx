@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { NavigationProp, ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
+
 import { useTheme } from 'styled-components';
+
+import { api } from '../../../services/api';
 
 import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
@@ -32,7 +35,7 @@ export const SignUpSecondStep = () => {
     navigation.goBack();
   }
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if(!password || !passwordConfirm){
       return Alert.alert('Informe a senha e a confirmação dela');
     }
@@ -41,10 +44,21 @@ export const SignUpSecondStep = () => {
       return Alert.alert('As senhas não são iguais');
     }
 
-    navigation.navigate('Confirmation', {
-      nextScreenRoute: 'SignIn',
-      title: 'Conta Criada!',
-      message: `Agora é só fazer login\ne aproveitar`,
+    await api.post('/users', {
+      name: user.name,
+      email: user.email,
+      driver_license: user.driverLicense,
+      password,
+    })
+    .then(() => {
+      navigation.navigate('Confirmation', {
+        nextScreenRoute: 'SignIn',
+        title: 'Conta Criada!',
+        message: `Agora é só fazer login\ne aproveitar`,
+      })
+    })
+    .catch(() => {
+      Alert.alert('Opa', 'Não foi possível cadastrar');
     })
   }
 
