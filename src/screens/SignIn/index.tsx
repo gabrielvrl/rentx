@@ -3,17 +3,19 @@ import { StatusBar, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Al
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 
+import * as S from './styles';
 import * as Yup from 'yup';
 
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
 
-import * as S from './styles';
+import { useAuth } from '../../hooks/auth';
 
 export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { signIn } = useAuth();
   
   const theme = useTheme();
   const navigation = useNavigation<NavigationProp<ParamListBase>>()
@@ -30,7 +32,8 @@ export function SignIn() {
   
       await schema.validate({ email, password });
 
-      // Fazer login
+      signIn({ email, password });
+      Alert.alert('Sucesso', 'Login realizado com sucesso!')
     } catch(error) {
       if(error instanceof Yup.ValidationError) {
         return Alert.alert('Opa', error.message);
@@ -86,7 +89,7 @@ export function SignIn() {
             <Button 
               title="Login"
               onPress={handleSignIn}
-              enabled={false}
+              enabled={true}
               loading={false}
             />
 
