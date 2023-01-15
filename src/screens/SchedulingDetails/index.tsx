@@ -35,7 +35,7 @@ export const SchedulingDetails: React.FC = () => {
   const route = useRoute();
   const { car, dates } = route.params as RouteParams;
 
-  const rentTotal = Number(dates.length * car.rent.price);
+  const rentTotal = Number(dates.length * car.price);
 
   const handleConfirmRental = async () => {
     setLoading(true)
@@ -101,8 +101,8 @@ export const SchedulingDetails: React.FC = () => {
           </S.Description>
 
           <S.Rent>
-            <S.Period>{car.rent.period}</S.Period>
-            <S.Price>R${car.rent.price}</S.Price>
+            <S.Period>{car.period}</S.Period>
+            <S.Price>R${car.price}</S.Price>
           </S.Rent>
         </S.Details>
 
@@ -147,7 +147,7 @@ export const SchedulingDetails: React.FC = () => {
         <S.RentalPrice>
           <S.RentalPriceLabel>TOTAL</S.RentalPriceLabel>
           <S.RentalPriceDetail>
-            <S.RentalPriceQuota>{`R$ ${car.rent.price} x${dates.length} diárias`}</S.RentalPriceQuota>
+            <S.RentalPriceQuota>{`R$ ${car.price} x${dates.length} diárias`}</S.RentalPriceQuota>
             <S.RentalPriceTotal>R$ {rentTotal}</S.RentalPriceTotal>
           </S.RentalPriceDetail>
         </S.RentalPrice>
