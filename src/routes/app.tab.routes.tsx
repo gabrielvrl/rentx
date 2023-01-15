@@ -22,11 +22,6 @@ export function AppTabRoutes(){
       />
 
       <Screen
-        name="SignUpSecondStep"
-        component={SignUpSecondStep}
-      />
-
-      <Screen
         name="MyCars"
         component={MyCars}
       />
