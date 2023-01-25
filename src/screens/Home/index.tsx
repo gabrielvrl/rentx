@@ -23,18 +23,27 @@ export const Home: React.FC = () => {
   }
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchCars = async () => {
       try {
         const response = await api.get('/cars');
-        setCars(response.data)
+        if(isMounted) {
+          setCars(response.data)
+        }
       } catch(error) {
         console.log(error)
       } finally {
-        setLoading(false)
+        if(isMounted) {
+          setLoading(false)
+        }
       }
     };
 
     fetchCars();
+    return () => {
+      isMounted = false;
+    }
   }, []);
 
   return (
