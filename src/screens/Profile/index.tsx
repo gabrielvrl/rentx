@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -10,6 +10,8 @@ import { BackButton } from '../../components/BackButton';
 import * as S from './styles';
 
 export const Profile = () => {
+  const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
+
   const theme = useTheme();
   const navigation = useNavigation();
 
@@ -52,6 +54,28 @@ export const Profile = () => {
           </S.PhotoButton>
         </S.PhotoContainer>
       </S.Header>
+
+      <S.Content>
+        <S.Options>
+          <S.Option 
+            active={option === 'dataEdit'}
+            onPress={() => setOption('dataEdit')}
+          >
+            <S.OptionTitle
+              active={option === 'dataEdit'}>
+              Dados
+            </S.OptionTitle>
+          </S.Option>
+          <S.Option 
+            active={option === 'passwordEdit'}
+            onPress={() => setOption('passwordEdit')}
+          >
+            <S.OptionTitle active={option === 'passwordEdit'}>
+              Trocar senha
+            </S.OptionTitle>
+          </S.Option>
+        </S.Options>
+      </S.Content>
 
     </S.Container>
   );
