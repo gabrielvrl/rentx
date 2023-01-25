@@ -10,7 +10,7 @@ export const Routes: React.FC = () => {
 
   return (
     <NavigationContainer>
-      { user ? <AppTabRoutes /> : <AuthRoutes /> }
+      { user.id ? <AppTabRoutes /> : <AuthRoutes /> }
     </NavigationContainer>
   )
 }
