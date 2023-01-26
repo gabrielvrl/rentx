@@ -41,12 +41,12 @@ export const Profile = () => {
       quality: 1,
     });
 
-    if (result.canceled) {
+    if (result.cancelled) {
       return;
     }
 
-    if (result.assets[0].uri) {
-      setAvatar(result.assets[0].uri);
+    if (result.uri) {
+      setAvatar(result.uri);
     }
   }
 
