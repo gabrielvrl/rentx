@@ -16,7 +16,7 @@ import { useAuth } from '../../hooks/auth';
 import * as S from './styles';
 
 export const Profile = () => {
-  const { user } = useAuth(); 
+  const { user, signOut } = useAuth(); 
   const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
   const [avatar, setAvatar] = useState(user.avatar);
   const [name, setName] = useState(user.name);
@@ -28,10 +28,6 @@ export const Profile = () => {
   const handleBack = () => {
     navigation.goBack();
   };
-
-  const handleSignOut = () => {
-
-  }
 
   const handleAvatarSelect = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -63,7 +59,7 @@ export const Profile = () => {
 
               <S.HeaderTitle>Editar Perfil</S.HeaderTitle>
 
-              <S.LogoutButton onPress={handleSignOut}>
+              <S.LogoutButton onPress={signOut}>
                 <Feather 
                   name='power' 
                   size={24} 

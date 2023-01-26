@@ -38,18 +38,8 @@ export function AppTabRoutes() {
         name={'Home'}
         component={AppStackRoutes}
         options={{
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ color }) => (
             <HomeSvg width={24} height={24} fill={color} />
-          )
-        }}
-      />
-
-      <Screen
-        name={'Profile'}
-        component={Profile}
-        options={{
-          tabBarIcon: ({ focused, color }) => (
-            <PeopleSvg width={24} height={24} fill={color} />
           )
         }}
       />
@@ -58,8 +48,18 @@ export function AppTabRoutes() {
         name={'MyCars'}
         component={MyCars}
         options={{
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ color }) => (
             <CarSvg width={24} height={24} fill={color} />
+          )
+        }}
+      />
+
+      <Screen
+        name={'Profile'}
+        component={Profile}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <PeopleSvg width={24} height={24} fill={color} />
           )
         }}
       />
