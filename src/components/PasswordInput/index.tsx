@@ -46,6 +46,7 @@ export const PasswordInput = ({ iconName, value, ...rest }: Props) => {
         onBlur={handleInputBlur}
         isFocused={isFocused}
         secureTextEntry={isPasswordVisible}
+        autoCorrect={false}
         {...rest}
       />
 
