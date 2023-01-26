@@ -6,6 +6,7 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 import { useTheme } from 'styled-components';
 import { Feather } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 
 import { BackButton } from '../../components/BackButton';
 
@@ -15,9 +16,12 @@ import { useAuth } from '../../hooks/auth';
 import * as S from './styles';
 
 export const Profile = () => {
-  const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
-
   const { user } = useAuth(); 
+  const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
+  const [avatar, setAvatar] = useState(user.avatar);
+  const [name, setName] = useState(user.name);
+  const [driverLicense, setDriverLicense] = useState(user.driver_license);
+
   const theme = useTheme();
   const navigation = useNavigation();
 
@@ -27,6 +31,23 @@ export const Profile = () => {
 
   const handleSignOut = () => {
 
+  }
+
+  const handleAvatarSelect = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    if (result.canceled) {
+      return;
+    }
+
+    if (result.assets[0].uri) {
+      setAvatar(result.assets[0].uri);
+    }
   }
 
   return (
@@ -52,8 +73,8 @@ export const Profile = () => {
             </S.HeaderTop>
 
             <S.PhotoContainer>
-              <S.Photo source={{ uri: 'https://avatars.githubusercontent.com/u/22225821?v=4' }} />
-              <S.PhotoButton onPress={() => {}}>
+              { !!avatar && <S.Photo source={{ uri: avatar }} /> }
+              <S.PhotoButton onPress={handleAvatarSelect}>
                 <Feather
                   name='camera'
                   size={24}
@@ -93,6 +114,7 @@ export const Profile = () => {
                   placeholder='Nome'
                   autoCorrect={false}
                   defaultValue={user.name}
+                  onChangeText={setName}
                 />
                 <Input 
                   iconName='mail'
@@ -103,7 +125,8 @@ export const Profile = () => {
                   iconName='credit-card'
                   placeholder='CNH'
                   keyboardType='numeric'   
-                  defaultValue={user.driver_license}           
+                  defaultValue={user.driver_license}
+                  onChangeText={setDriverLicense}
                 />
               </S.Section>
               :
