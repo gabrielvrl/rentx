@@ -81,6 +81,20 @@ export const Profile = () => {
     }
   }
 
+  const handleSignOut = () => {
+    Alert.alert('Tem certeza?', 'Se você sair, irá precisar de internet para conectar-se novamente.', [
+      {
+        text: 'Cancelar',
+        onPress: () => {},
+        style: 'cancel',
+      },
+      {
+        text: 'Sair',
+        onPress: () => signOut(),
+      }
+    ]);
+  }
+
   return (
     <KeyboardAvoidingView behavior='position' enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -94,7 +108,7 @@ export const Profile = () => {
 
               <S.HeaderTitle>Editar Perfil</S.HeaderTitle>
 
-              <S.LogoutButton onPress={signOut}>
+              <S.LogoutButton onPress={handleSignOut}>
                 <Feather 
                   name='power' 
                   size={24} 
