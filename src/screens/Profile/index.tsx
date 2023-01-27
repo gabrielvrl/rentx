@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
+import { Alert, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -8,15 +8,19 @@ import { useTheme } from 'styled-components';
 import { Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
+import * as Yup from 'yup';
+
 import { BackButton } from '../../components/BackButton';
 
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
 import { useAuth } from '../../hooks/auth';
+import { Button } from '../../components/Button';
 import * as S from './styles';
 
 export const Profile = () => {
-  const { user, signOut } = useAuth(); 
+  const { user, signOut, updatedUser } = useAuth();
+
   const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
   const [avatar, setAvatar] = useState(user.avatar);
   const [name, setName] = useState(user.name);
@@ -43,6 +47,37 @@ export const Profile = () => {
 
     if (result.uri) {
       setAvatar(result.uri);
+    }
+  }
+
+  const handleProfileUpdate = async () => {
+    try {
+      const schema = Yup.object().shape({
+        driverLicense: Yup.string().required('CNH é obrigatória'),
+        name: Yup.string().required('Nome é obrigatório'),
+      });
+
+      const data = { name, driverLicense };
+      await schema.validate(data);
+
+      await updatedUser({
+        id: user.id,
+        user_id: user.user_id,
+        email: user.email,
+        name,
+        driver_license: driverLicense,
+        avatar,
+        token: user.token,
+      });
+
+      Alert.alert('Perfil atualizado com sucesso!')
+
+    } catch(e) {
+      if(e instanceof Yup.ValidationError) {
+        return Alert.alert('Opa', e.message);
+      } else {
+        Alert.alert('Não foi possível atualizar o perfil!')
+      }
     }
   }
 
@@ -141,6 +176,11 @@ export const Profile = () => {
                 />
               </S.Section>
             }
+
+            <Button
+              title='Salvar alterações'
+              onPress={handleProfileUpdate}
+            />
           </S.Content>
         </S.Container>
       </TouchableWithoutFeedback>
