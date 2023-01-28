@@ -17,9 +17,11 @@ import { PasswordInput } from '../../components/PasswordInput';
 import { useAuth } from '../../hooks/auth';
 import { Button } from '../../components/Button';
 import * as S from './styles';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 export const Profile = () => {
   const { user, signOut, updatedUser } = useAuth();
+  const netInfo = useNetInfo();
 
   const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
   const [avatar, setAvatar] = useState(user.avatar);
@@ -32,6 +34,14 @@ export const Profile = () => {
   const handleBack = () => {
     navigation.goBack();
   };
+
+  const handleOptionChange = (optionSelected: 'dataEdit' | 'passwordEdit') => {
+    if(netInfo.isConnected === false && optionSelected === 'passwordEdit') {
+      Alert.alert('Você está offline!', 'Para mudar a senha, conecte-se a internet!')
+    } else {
+      setOption(optionSelected);
+    }
+  }
 
   const handleAvatarSelect = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -133,7 +143,7 @@ export const Profile = () => {
             <S.Options>
               <S.Option 
                 active={option === 'dataEdit'}
-                onPress={() => setOption('dataEdit')}
+                onPress={() => handleOptionChange('dataEdit')}
               >
                 <S.OptionTitle
                   active={option === 'dataEdit'}>
@@ -142,7 +152,7 @@ export const Profile = () => {
               </S.Option>
               <S.Option 
                 active={option === 'passwordEdit'}
-                onPress={() => setOption('passwordEdit')}
+                onPress={() => handleOptionChange('passwordEdit')}
               >
                 <S.OptionTitle active={option === 'passwordEdit'}>
                   Trocar senha
