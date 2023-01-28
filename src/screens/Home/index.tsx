@@ -29,35 +29,21 @@ export const Home: React.FC = () => {
     navigation.navigate('CarDetails', { car })
   }
 
-  const handleSynchronize = async () => {
-    try {
-      const offlineStorage = await database.get('cars');
-      await synchronize({
-        database,
-        pullChanges: async ({ lastPulledAt }) => {
-          const response = await api.get(`/sync/pull?lastPulledVersion=${lastPulledAt || 0}`);
-          const { changes, latestVersion } = response.data;
-
-          return { changes, timestamp: latestVersion }
-        },
-        pushChanges: async ({ changes }) => {
-          const user = changes.users;
-          await api.post('/sync/push', user);
-        }
-      });
-
-      // const carsCollection = offlineStorage.collections.get('cars');
-      // const cars = await carsCollection.query().fetch();
-
-      // if(cars.length > 0) {
-      //   setCars(cars);
-      // }
-
-    } catch(error) {
-      console.log(error)
-    } finally {
-      setLoading(false)
-    }
+  async function offlineSynchronize(){
+    await synchronize({
+      database,
+      pullChanges: async ({ lastPulledAt }) => {
+        const response = await api
+        .get(`cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`);
+        
+        const { changes, latestVersion } = response.data;
+        return { changes, timestamp: latestVersion }
+      },
+      pushChanges: async ({ changes }) => {
+        const user = changes.users;
+        await api.post('/users/sync', user);
+      },
+    });
   }
 
   useEffect(() => {
@@ -67,8 +53,6 @@ export const Home: React.FC = () => {
       try {
         const carCollection = database.get<ModelCar>('cars');
         const cars = await carCollection.query().fetch();
-
-        console.log(cars)
 
         if(isMounted) {
           setCars(cars)
@@ -91,7 +75,7 @@ export const Home: React.FC = () => {
 
   useEffect(() => {
     if(netInfo.isConnected === true) {
-      handleSynchronize();
+      offlineSynchronize();
     }
   }, [netInfo.isConnected])
 
