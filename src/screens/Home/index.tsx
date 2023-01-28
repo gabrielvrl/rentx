@@ -30,20 +30,25 @@ export const Home: React.FC = () => {
   }
 
   async function offlineSynchronize(){
-    await synchronize({
-      database,
-      pullChanges: async ({ lastPulledAt }) => {
-        const response = await api
-        .get(`cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`);
-        
-        const { changes, latestVersion } = response.data;
-        return { changes, timestamp: latestVersion }
-      },
-      pushChanges: async ({ changes }) => {
-        const user = changes.users;
-        await api.post('/users/sync', user);
-      },
-    });
+    try{
+      await synchronize({
+        database,
+        pullChanges: async ({ lastPulledAt }) => {
+          const response = await api
+          .get(`cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`);
+          
+          const { changes, latestVersion } = response.data;
+          return { changes, timestamp: latestVersion }
+        },
+        pushChanges: async ({ changes }) => {
+          const user = changes.users;
+          await api.post('/users/sync', user);
+        },
+      });
+    }
+    catch(error){
+      console.log(error)
+    }
   }
 
   useEffect(() => {
