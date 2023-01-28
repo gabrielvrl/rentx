@@ -26,7 +26,7 @@ export const Home: React.FC = () => {
   const netInfo = useNetInfo();
 
   const handleCarDetails = (car: ModelCar) => {
-    navigation.navigate('CarDetails', { car })
+    navigation.navigate('CarDetails', { car });
   }
 
   async function offlineSynchronize(){

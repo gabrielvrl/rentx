@@ -41,7 +41,7 @@ export interface RouteParams {
 }
 
 export const CarDetails: React.FC = () => {
-  const [carUpdated, setCarUpdated] = useState({} as CarDTO);
+  const [carUpdated, setCarUpdated] = useState<CarDTO>({} as CarDTO);
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const route = useRoute();
   const { car } = route.params as RouteParams;
@@ -96,7 +96,7 @@ export const CarDetails: React.FC = () => {
     if(netInfo.isConnected === true) {
       fetchCarUpdated();
     }
-  }, [netInfo.isConnected])
+  }, [netInfo.isConnected]);
 
   return (
     <Container>
