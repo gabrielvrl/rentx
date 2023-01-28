@@ -14,6 +14,9 @@ import { api } from '../../services/api';
 import * as S from './styles';
 import { Car } from '../../components/Car';
 
+import { Car as ModelCar } from '../../database/model/Car';
+import { format, parseISO } from 'date-fns';
+
 interface CarProps {
   car: CarDTO;
   id: string;
@@ -22,19 +25,33 @@ interface CarProps {
   endDate: string;
 }
 
+interface DataProps {
+  id: string;
+  car: ModelCar;
+  start_date: string;
+  end_date: string;
+}
+
 export const MyCars = () => {
   const theme = useTheme();
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
-  const [cars, setCars] = useState<CarProps[]>([]);
+  const [cars, setCars] = useState<DataProps[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const response = await api.get('schedules_byuser?user_id=1');
+        const response = await api.get('rentals');
+        const dataFormatted = response.data.map((data: DataProps) => {
+          return {
+            car: data.car,
+            start_date: format(parseISO(data.start_date), 'dd/MM/yyyy'),
+            end_date: format(parseISO(data.end_date), 'dd/MM/yyyy'),
+          }
+        })
 
-        setCars(response.data);
+        setCars(dataFormatted);
       } catch(error) {
         console.log(error)
       } finally {
@@ -93,14 +110,14 @@ export const MyCars = () => {
                 <S.CarFooter>
                   <S.CarFooterTitle>Período</S.CarFooterTitle>
                   <S.CarFooterPeriod>
-                    <S.CarFooterDate>{item.startDate}</S.CarFooterDate>
+                    <S.CarFooterDate>{item.start_date}</S.CarFooterDate>
                     <AntDesign
                       name="arrowright"
                       size={20}
                       color={theme.colors.title}
                       style={{ marginHorizontal: 10 }}
                     />
-                    <S.CarFooterDate>{item.endDate}</S.CarFooterDate>
+                    <S.CarFooterDate>{item.end_date}</S.CarFooterDate>
                   </S.CarFooterPeriod>
                 </S.CarFooter>
               </S.CarWrapper>
