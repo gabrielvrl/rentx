@@ -1,4 +1,4 @@
-![Logo](.github/images/logo.png)
+![App Screenshot](.github/images/cover.png)
 
 # Rentx
 Complete application to rent cars.
@@ -35,7 +35,3 @@ yarn run api
 - List cars avaiables
 - Rent cars
 - And more...
-
-![App Screenshot](.github/images/cover.png)
-
-
